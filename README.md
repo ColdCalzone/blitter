@@ -10,7 +10,7 @@ A Livesplit-inspired speedrunning split timer for terminal / command-line.
 
 - Global hotkeys
 - :rainbow: Animated rainbow best splits
-- 24-bit terminal color
+- Terminal color scheme
 - Undo / delete split
 - Pause / resume
 - Splits and history stored in single human-editable file
@@ -30,19 +30,23 @@ Install opam: [opam install instructions](https://opam.ocaml.org/doc/Install.htm
 Set up opam and install OCaml dependencies:
 
 ```bash
-$ opam init
-$ opam switch create 4.07.0
-$ opam install dune core lwt re color sexp_pretty uutf lwt_ppx uuseg notty async
+opam init
+opam switch create 4.07.0
+opam install dune core lwt re color sexp_pretty uutf lwt_ppx uuseg notty async
 ```
 
 ### Python Dependencies
 
 Flitter uses a tiny amount of Python to provide global hotkeys.
 
-Install pip for Python 3. For example, on Ubuntu / Debian:
+Install pip for Python 3.
 
 ```bash
-$ sudo apt install python3-pip
+# Debian / Ubuntu:
+sudo apt install python3-pip
+
+# Arch:
+sudo pacman -Syu python-pip
 ```
 
 You have two choices of Python libraries to rely on.
@@ -53,8 +57,8 @@ You have two choices of Python libraries to rely on.
 To install either of these libraries, run the appropriate line:
 
 ```bash
-$ pip3 install --user pynput
-$ pip3 install --user evdev
+pip3 install --user pynput
+pip3 install --user evdev
 ```
 
 If both libraries are installed, `evdev` is preferred. See the section on key bindings for a way to override that default without uninstalling `evdev`.
@@ -62,7 +66,7 @@ If both libraries are installed, `evdev` is preferred. See the section on key bi
 As mentioned above, for `evdev` you have two choices. The simplest of the two is to run Flitter as root via `sudo`, which creates the obvious security issues. Alternatively, you can add yourself to the group which has ownership over `/dev/input`; this is usually "input", but double-check the permissions under `/dev/input` to confirm that. Assuming it is "input", then executing
 
 ```bash
-$ sudo usermod -G input -a $USER
+sudo usermod -G input -a $USER
 ```
 
 and logging out then back in will do the trick. This *also* creates a security problem, as now any program executed with your uid could read every key you press (and if the default permissions allow writing, it could also inject keypresses and mouse movements). There is no solution involving `evdev` that doesn't create one of these two security holes, as far as we're aware. Incidentally, Xlib has the same security issues.
@@ -72,8 +76,8 @@ and logging out then back in will do the trick. This *also* creates a security p
 First, clone the repository:
 
 ```bash
-$ git clone --recursive https://github.com/alexozer/flitter.git
-$ cd flitter
+git clone https://github.com/alexozer/flitter.git
+cd flitter
 ```
 
 In the "examples" directory you'll find `test_evdev.py` and `test_pynput.py`. These run independently of Flitter, and allow you to test that you've got the appropriate Python library installed properly. They are also useful for developing your own key bindings, discussed later.
@@ -81,8 +85,8 @@ In the "examples" directory you'll find `test_evdev.py` and `test_pynput.py`. Th
 To build and install Flitter,
 
 ```bash
-$ dune build
-$ dune install
+dune build
+dune install
 ```
 
 ## Usage
@@ -94,7 +98,7 @@ Copy `examples/splits.scm` somewhere. Edit it and add your game and split inform
 Launch Flitter with your splits file:
 
 ```bash
-$ flitter my-splits.scm
+flitter my-splits.scm
 ```
 
 **Warning:** Don't edit your splits file while Flitter is running, your changes will be overwritten.
