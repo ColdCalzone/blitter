@@ -36,13 +36,13 @@ let handle_key flitter (t, key_str) =
     match flitter.timer.state with
     | Idle ->
       (match key_str with
-      | "space" | "j" -> {timer with state = Timing ([], t)}
-      | "q" -> raise Stdlib.Exit
+      | "start-split-reset" | "start-split" -> {timer with state = Timing ([], t)}
+      | "quit" -> raise Stdlib.Exit
       | _ -> timer)
     | Timing (splits, start_time) ->
       let curr_split = List.length splits in
       (match key_str with
-      | "space" | "j" ->
+      | "start-split-reset" | "start-split" ->
         let curr_split_time = Some (Duration.between start_time t) in
         let new_splits = List.append splits [curr_split_time] in
         let new_state =
@@ -51,7 +51,7 @@ let handle_key flitter (t, key_str) =
           else Timing (new_splits, start_time)
         in
         {timer with state = new_state}
-      | "k" ->
+      | "undo" ->
         let new_state =
           match curr_split with
           | 0 -> Timer_state.Idle
@@ -59,8 +59,8 @@ let handle_key flitter (t, key_str) =
           | _ -> Timing (List.slice splits 0 (curr_split - 1), start_time)
         in
         {timer with state = new_state}
-      | "backspace" | "delete" -> {timer with state = Paused (splits, start_time, t)}
-      | "d" ->
+      | "pause-reset" | "pause-delete" -> {timer with state = Paused (splits, start_time, t)}
+      | "delete-last" ->
         let new_state =
           if curr_split > 0
           then
@@ -72,13 +72,13 @@ let handle_key flitter (t, key_str) =
       | _ -> timer)
     | Paused (splits, start_time, pause_time) ->
       (match key_str with
-      | "space" | "j" ->
+      | "start-split-reset" | "start-split" ->
         let new_state =
           let time = Time_ns.diff t pause_time |> Time_ns.add start_time in
           Timer_state.Timing (splits, time)
         in
         {timer with state = new_state}
-      | "backspace" ->
+      | "pause-reset" ->
         let new_timer =
           { timer with
             state = Idle
@@ -87,11 +87,11 @@ let handle_key flitter (t, key_str) =
         in
         Loadsave.save new_timer;
         new_timer
-      | "delete" -> {timer with state = Idle}
+      | "pause-delete" -> {timer with state = Idle}
       | _ -> timer)
     | Done (splits, start_time) ->
       (match key_str with
-      | "space" | "backspace" ->
+      | "start-split-reset" | "pause-reset" ->
         let archived_run = Splits.archive_done_run timer splits in
         let pb = Splits.updated_pb timer in
         let new_timer =
@@ -106,15 +106,15 @@ let handle_key flitter (t, key_str) =
         in
         Loadsave.save new_timer;
         new_timer
-      | "delete" -> {timer with state = Idle}
-      | "k" ->
+      | "pause-delete" -> {timer with state = Idle}
+      | "undo" ->
         let new_splits =
           if List.length splits = 1
           then []
           else List.(slice splits 0 (length splits - 1))
         in
         {timer with state = Timing (new_splits, start_time)}
-      | "q" -> raise Stdlib.Exit
+      | "quit" -> raise Stdlib.Exit
       | _ -> timer)
   in
   {flitter with timer = new_timer}
