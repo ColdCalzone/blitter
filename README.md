@@ -10,7 +10,7 @@ A Livesplit-inspired speedrunning split timer for terminal / command-line.
 
 - Global hotkeys
 - :rainbow: Animated rainbow best splits
-- Terminal color scheme
+- Terminal colors
 - Undo / delete split
 - Pause / resume
 - Splits and history stored in single human-editable file
