@@ -26,15 +26,13 @@ jobs:
       - name: Set-up OCaml
         uses: ocaml/setup-ocaml@v3
         with:
-          ocaml-compiler: 5
+          ocaml-compiler: 4.07.0
 
       - run: |
           sudo apt install python3-pip
           pip3 install evdev
           
       - run: |
-          opam init
-          opam switch create 4.07.0
           opam install dune core lwt re color sexp_pretty uutf lwt_ppx uuseg notty async
 
       - run: opam exec -- dune build
