@@ -27,6 +27,7 @@ jobs:
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 4.07.0
+          opam-pin: false
 
       - run: |
           sudo apt install python3-pip
