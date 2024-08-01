@@ -35,14 +35,8 @@ jobs:
           opam install dune core lwt re color sexp_pretty uutf lwt_ppx uuseg notty async
 
       - run: opam exec -- dune build
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Upload Release Asset
-        env:
+      -  env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+         run: |
           ls
           gh release upload out _build/flitter
