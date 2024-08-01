@@ -32,7 +32,10 @@ jobs:
           sudo apt install python3-pip
           pip3 install evdev
           
-      - run: opam install . --deps-only --with-test
+      - run: |
+          opam init
+          opam switch create 4.07.0
+          opam install dune core lwt re color sexp_pretty uutf lwt_ppx uuseg notty async
 
       - run: opam exec -- dune build
 
