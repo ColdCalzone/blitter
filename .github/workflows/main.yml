@@ -44,4 +44,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run:
+          ls
           gh release upload out _build/flitter
