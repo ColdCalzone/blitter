@@ -39,5 +39,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          run: |
           ls _build/default/bin
-          tar -cvf build.tar _build
+          tar -czf build.tar.gz _build
+          gh release create out
           gh release upload out build.tar
