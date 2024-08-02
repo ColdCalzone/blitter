@@ -41,4 +41,4 @@ jobs:
           ls _build/default/bin
           tar -czf build.tar.gz _build
           gh release create out
-          gh release upload out build.tar
+          gh release upload out build.tar.gz
