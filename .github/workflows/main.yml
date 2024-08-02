@@ -38,5 +38,5 @@ jobs:
       -  env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          run: |
-          ls _build/bin/default/bin
-          gh release upload out _build/bin/default/bin/flitter.exe
+          ls _build/bin/default/
+          gh release upload out _build/bin/default/flitter.exe
