@@ -1,5 +1,7 @@
 # Flitter
 
+**I MADE THIS REPO TO BUILD THIS PROJECT. I DO NOT HAVE THE HARD DRIVE SPACE TO DO IT MYSELF.**
+
 A Livesplit-inspired speedrunning split timer for terminal / command-line.
 
 ![Animated demo GIF](/doc/demo.gif)
