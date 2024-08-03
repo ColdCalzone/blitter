@@ -29,7 +29,7 @@ jobs:
 
       - run: |
           sudo apt install python3-pip
-          pip3 install evdev
+          pip3 install pynput
           
       - run: |
           opam install dune core lwt re color sexp_pretty uutf lwt_ppx uuseg notty async
